@@ -20,32 +20,11 @@ connectDB();
 
 const app = express();
 // Middleware
-// core for render 
-// app.use(cors()); // Enable CORS
-const allowedOrigins = [
-  "https://kisanhaat.vercel.app", // your deployed frontend
-  "http://localhost:5173",         // local dev
-  "http://localhost:5174"          // another local dev port
-];
-
-// Dynamic CORS
-app.use((req, res, next) => {
-    const origin = req.headers.origin;
-    if (allowedOrigins.includes(origin)) {
-        res.header("Access-Control-Allow-Origin", origin);
-    }
-    res.header("Access-Control-Allow-Credentials", "true");
-    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-
-    // Handle preflight request
-    if (req.method === "OPTIONS") {
-        return res.sendStatus(204); // No Content
-    }
-
-    next();
-});
  
+app.use(cors({
+    origin:['http://localhost:5173','https://kisaanhaat-backend.onrender.com'],
+}))
+  
 app.use(express.json()); // Parse JSON body
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded data
 
