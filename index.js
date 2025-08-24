@@ -22,13 +22,32 @@ const app = express();
 
 // Middleware
 // core for render 
-app.use(cors()); // Enable CORS
+// app.use(cors()); // Enable CORS
+const allowedOrigins = [
+  "https://kisanhaat.vercel.app", // frontend
+  "http://localhost:5173",         // local dev
+  "http://localhost:5174"          // another local dev port
+];
 
 app.use(cors({
-  // origin:  '*', // Your deployed React frontend
-  origin: ['https://kisaanhaat-backend.onrender.com'],
-  credentials: true
+  origin: function(origin, callback){
+    if(!origin) return callback(null, true); // allow server-to-server requests or Postman
+    if(allowedOrigins.indexOf(origin) === -1){
+      return callback(new Error("CORS policy: Access denied"), false);
+    }
+    return callback(null, true);
+  },
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
 }));
+
+// Handle preflight requests for all routes
+app.options("*", cors({ origin: allowedOrigins, credentials: true }));
+// app.use(cors({
+  // origin:  '*', // Your deployed React frontend
+//   origin: ['https://kisaanhaat-backend.onrender.com'],
+//   credentials: true
+// }));
 app.use(express.json()); // Parse JSON body
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded data
 
