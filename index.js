@@ -23,14 +23,9 @@ const app = express();
 // Middleware
 // core for render 
 
-app.use(cors({ origin: ['https://kisaanhaat-backend.onrender.com',
-    'https://kisanhaat.vercel.app',
-        'http://localhost:5173',
-        'http://localhost:5174'
-    ],
-     credentials: true })); // Enable CORS for specific origin
-app.options("*", cors({
-  origin: "https://kisanhaat.vercel.app",
+app.use(cors({
+  // origin:  '*', // Your deployed React frontend
+  origin: ['https://kisaanhaat-backend.onrender.com'],
   credentials: true
 }));
 app.use(cors()); // Enable CORS
