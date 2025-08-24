@@ -163,6 +163,7 @@ app.use('/api/posts', postRoutes);
 app.use('/api/machinery', machineryRoutes);
 app.use('/api/rentals', rentalRoutes);
 app.use('/api/hire', hire);
+app.use('/api' ,require('./rentalbackend/routes/contactRoutes'));
 
 // ✅ OTP Handling
 app.post('/api/auth/send-otp', async (req, res) => {
