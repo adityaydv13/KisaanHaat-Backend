@@ -24,6 +24,7 @@ const app = express();
 // core for render 
 
 app.use(cors({ origin: ['https://kisaanhaat-backend.onrender.com',
+    'https://kisanhaat.vercel.app',
         'http://localhost:5173',
         'http://localhost:5174'
     ],
