@@ -22,13 +22,13 @@ const app = express();
 
 // Middleware
 // core for render 
+app.use(cors()); // Enable CORS
 
 app.use(cors({
   // origin:  '*', // Your deployed React frontend
   origin: ['https://kisaanhaat-backend.onrender.com'],
   credentials: true
 }));
-app.use(cors()); // Enable CORS
 app.use(express.json()); // Parse JSON body
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded data
 
