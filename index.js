@@ -13,13 +13,12 @@ const User = require('./models/User'); // User model
 const hire = require('./rentalbackend/routes/HireRoutes'); // Ensure the HireRoutes is correctly imported
 
 // Load environment variables
-dotenv.config();
+require('dotenv').config();
 
 // Connect to MongoDB
 connectDB();
 
 const app = express();
-
 // Middleware
 // core for render 
 // app.use(cors()); // Enable CORS
@@ -46,14 +45,7 @@ app.use((req, res, next) => {
 
     next();
 });
-
-// Handle preflight requests for all routes
-// app.options("*", cors({ origin: allowedOrigins, credentials: true }));
-// app.use(cors({
-  // origin:  '*', // Your deployed React frontend
-//   origin: ['https://kisaanhaat-backend.onrender.com'],
-//   credentials: true
-// }));
+ 
 app.use(express.json()); // Parse JSON body
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded data
 
