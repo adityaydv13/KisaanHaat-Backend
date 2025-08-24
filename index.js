@@ -29,8 +29,11 @@ app.use(cors({ origin: ['https://kisaanhaat-backend.onrender.com',
         'http://localhost:5174'
     ],
      credentials: true })); // Enable CORS for specific origin
-
-// app.use(cors()); // Enable CORS
+app.options("*", cors({
+  origin: "https://kisanhaat.vercel.app",
+  credentials: true
+}));
+app.use(cors()); // Enable CORS
 app.use(express.json()); // Parse JSON body
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded data
 
