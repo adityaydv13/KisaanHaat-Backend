@@ -158,12 +158,15 @@ app.use((req, res, next) => {
 });
 
 // ✅ Routes
+app.use("/api/users", authRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/machinery', machineryRoutes);
 app.use('/api/rentals', rentalRoutes);
 app.use('/api/hire', hire);
 app.use('/api' ,require('./rentalbackend/routes/contactRoutes'));
+app.use('/api/hires' ,require('./rentalbackend/routes/getHiredRoutes'));
+app.use('/api/deletehire',require('./rentalbackend/routes/getHiredRoutes')); 
 
 // ✅ OTP Handling
 app.post('/api/auth/send-otp', async (req, res) => {

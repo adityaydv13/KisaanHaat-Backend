@@ -34,7 +34,7 @@ exports.login = async (req, res) => {
 
   try {
     const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ message: 'Invalid credentials' });
+    if (!user) return res.status(400).json({ message: 'User not found' });
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
@@ -42,8 +42,7 @@ exports.login = async (req, res) => {
     const token = jwt.sign({ userId: user._id, role: user.role,name:user.name }, JWT_SECRET, {
       expiresIn: '1h',
     });
-
-    // ✅ Include user object in response
+     // ✅ Include user object in response
     res.status(200).json({
       token,
       role: user.role,
@@ -112,3 +111,34 @@ exports.getUser = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
+
+exports.deleteUser = async (req, res) => {
+  try {
+    // 1️⃣ Find the user to delete
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // 2️⃣ Make sure req.user exists (from auth middleware)
+    if (!req.user) {
+      return res.status(401).json({ message: "Not authenticated" });
+    }
+
+    // 3️⃣ Check if the logged-in user is deleting their own account
+    // if (user._id.toString() !== req.user._id.toString()) {
+    //   return res.status(403).json({ message: "Not authorized" });
+    // }
+
+    // 4️⃣ Delete the user
+    await user.deleteOne();
+
+    res.status(200).json({ message: "User deleted successfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+

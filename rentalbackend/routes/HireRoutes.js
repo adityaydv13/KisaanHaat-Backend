@@ -142,7 +142,7 @@ const authMiddleware = require("../../middleware/authMiddleware");
 // ------------------ Create a hire request ------------------
 router.post("/", authMiddleware, async (req, res) => {
   const { machineId } = req.body;
-  const requesterId = req.user.userId;
+  // const requesterId = req.user.userId;
 
   if (!machineId) {
     return res.status(400).json({ message: "machineId is required" });
@@ -154,10 +154,13 @@ router.post("/", authMiddleware, async (req, res) => {
 
     const newHire = new Hire({
       machineId,
-      requester: requesterId
+      requester: req.user.userId
     });
-
+       
     await newHire.save();
+//     await newHire.populate("requester", "name email location");
+// await newHire.populate("machineId", "name location price");
+
     res.status(201).json({ message: "Hire request sent successfully", hire: newHire });
   } catch (err) {
     console.error(err);
@@ -174,7 +177,7 @@ router.get("/my-requests", authMiddleware, async (req, res) => {
 
     const requests = await Hire.find({ machineId: { $in: machineIds } })
       .populate("machineId", "name price location")
-      .populate("requester", "name email");
+      .populate("requester", "name email location");
 
     res.json(requests);
   } catch (err) {
