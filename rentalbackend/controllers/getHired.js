@@ -8,9 +8,9 @@ exports.getMyhired=async (req, res) => {
       status: "approved"            // only approved ones
     })
     .populate("machineId", "name price location")
-    .populate("requester", "name email")
+    .populate("requester", "name")
     .sort({ hireDate: -1 }); // latest first
-
+ 
     res.json(hires);
   } catch (error) {
     res.status(500).json({ message: "Server error" });
