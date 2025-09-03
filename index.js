@@ -16,6 +16,9 @@ const hire = require('./rentalbackend/routes/HireRoutes'); // Hire routes
 
 const { createPayment, getPaymentStatus, phonePeCallback }=require("./controllers/paymentController");
 
+// razorpay 
+
+const {createOrder ,verifyPayment} =require("./controllers/RozorController")
 
 // Load environment variables
 dotenv.config();
@@ -88,6 +91,13 @@ app.get("/", (_req, res) => res.send("KisanHaat Payments API OK"));
 app.post("/api/pay/create", createPayment);
 app.get("/api/pay/status", getPaymentStatus);
 app.post("/api/pay/callback", phonePeCallback);
+
+
+// Razorpay routes
+app.post("/api/pay/razorpay/create", createOrder);
+app.post("/api/pay/razorpay/verify", verifyPayment);
+
+
 
 // Bids Routes 
 // app.use('/api/crops',require('./routes/cropRoutes'));
