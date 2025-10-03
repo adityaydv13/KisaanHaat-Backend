@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-// const protect = require('../middleware/authMiddleware');
 const { createBid, getBids, bidAccept ,getMyBids} = require('../controllers/cropControllers');
 const authMiddleware = require('../middleware/authMiddleware');
 

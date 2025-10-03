@@ -1,15 +1,16 @@
 const nodemailer = require('nodemailer');
-require('dotenv').config({ path: __dirname + '/../../../.env' });
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '../../../.env') });
 
-
+ 
 exports.submitEnquiry = async (req, res) => {
   const { name, email, message } = req.body;
 
   const transporter = nodemailer.createTransport({
     service: 'Gmail',
     auth: {
-      user:"adityaydv10@gmail.com",//process.env.EMAIL_USER,      // Gmail address
-      pass: "eeok mloi aybc pbms"//process.env.EMAIL_PASS,      // Gmail App Password (NOT your real Gmail password)
+      user: process.env.USER ,  
+      pass: process.env.PASS 
     },
     tls: {
       rejectUnauthorized: false, // allows self-signed certs (use only in development)
@@ -18,7 +19,7 @@ exports.submitEnquiry = async (req, res) => {
 
   const mailOptions = {
     from: `"${name}">`,
-    to:"adityaydv10@gmail.com",
+    to:process.env.USER,
     subject: `New Query from ${name}`,
     text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
   };
